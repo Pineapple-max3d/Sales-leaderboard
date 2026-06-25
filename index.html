@@ -86,9 +86,9 @@
   .p2 .prank { color: var(--silver); }
   .p3 .prank { color: var(--bronze); }
 
-  .pname { font-size: clamp(0.9rem,2.5vw,1.15rem); font-weight: 700; color: var(--text); margin-top: 0.12rem; }
+  .pname { font-size: clamp(1.1rem,3vw,1.4rem); font-weight: 800; color: var(--text); margin-top: 0.12rem; letter-spacing: -0.02em; }
 
-  .pinst { font-size: clamp(1rem,3vw,1.35rem); font-weight: 800; letter-spacing: -0.02em; margin-top: 0.3rem; }
+  .pinst { font-size: clamp(1.2rem,4vw,1.6rem); font-weight: 800; letter-spacing: -0.03em; margin-top: 0.3rem; }
   .p1 .pinst { color: var(--gold); }
   .p2 .pinst { color: var(--silver); }
   .p3 .pinst { color: var(--bronze); }
@@ -386,6 +386,49 @@
     .century-member .cm-val span { font-size: 0.7rem !important; display: block; }
     .century-stat { display: none; }
   }
+
+  /* Podium Century Club tag */
+  .cc-tag {
+    position: absolute;
+    top: 0.85rem;
+    right: 0.85rem;
+    display: inline-flex;
+    align-items: center;
+    gap: 0.25rem;
+    padding: 0.25rem 0.7rem;
+    border-radius: 99px;
+    font-size: 0.7rem;
+    font-weight: 700;
+    letter-spacing: 0.04em;
+    background: rgba(109,40,217,0.85);
+    color: #ffffff;
+    border: 1px solid rgba(139,92,246,0.6);
+    z-index: 2;
+    overflow: hidden;
+  }
+  body.light .cc-tag {
+    background: rgba(139,92,246,0.15);
+    color: #5b21b6;
+    border-color: rgba(109,40,217,0.35);
+  }
+  .cc-tag::after {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: -100%;
+    width: 60%;
+    height: 100%;
+    background: linear-gradient(90deg, transparent, rgba(255,255,255,0.55), transparent);
+    animation: cc-shine 4s ease-in-out infinite;
+    border-radius: 99px;
+  }
+  @keyframes cc-shine {
+    0%   { left: -80%; opacity: 0; }
+    10%  { opacity: 1; }
+    40%  { left: 130%; opacity: 1; }
+    41%  { opacity: 0; }
+    100% { left: 130%; opacity: 0; }
+  }
 </style>
 </head>
 <body class="light">
@@ -439,9 +482,9 @@
 
 <script>
 const reps = [
-  { name:"Adeel", installed:63432, written:91207 },
+  { name:"Adeel", installed:74032, written:109006 },
   { name:"Waqas", installed:39560, written:61440 },
-  { name:"Amber", installed:85837, written:107519 },
+  { name:"Amber", installed:85837, written:131447 },
   { name:"Sandy", installed:0,     written:33075 },
   { name:"Wasil", installed:0,     written:0     },
   { name:"Ahmed", installed:16800, written:59800 },
@@ -485,7 +528,9 @@ reps.slice(0,3).forEach((r,i) => {
   wrap.className = `pc-wrap ${ringClass[i]}`;
   const d = document.createElement('div');
   d.className = `pc ${pClass[i]}`;
+  const ccTag = r.written >= 100000 ? '<div class="cc-tag">💎 Century Club</div>' : '';
   d.innerHTML = `
+    ${ccTag}
     <div class="medal">${medals[i]}</div>
     <div class="pinfo">
       <div class="prank">${rl[i]}</div>
