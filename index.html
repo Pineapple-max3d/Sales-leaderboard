@@ -429,10 +429,90 @@
     41%  { opacity: 0; }
     100% { left: 130%; opacity: 0; }
   }
+
+  /* ── Loader ── */
+  #loader {
+    position: fixed;
+    inset: 0;
+    z-index: 9999;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    background: var(--bg);
+    transition: opacity 0.6s ease;
+  }
+  body.light #loader { background: #f4f4f6; }
+
+  #loader-pct {
+    font-family: 'DM Sans', sans-serif;
+    font-size: clamp(3.5rem, 12vw, 6rem);
+    font-weight: 800;
+    letter-spacing: -0.04em;
+    line-height: 1;
+    margin-bottom: 1.2rem;
+    background: linear-gradient(90deg, #3d1f00, #7b3f00, #c87941, #f5c542, #ffe066);
+    -webkit-background-clip: text;
+    background-clip: text;
+    background-size: 200% 100%;
+    animation: gradShift 4s ease forwards;
+    -webkit-text-fill-color: rgb(61,31,0);
+  }
+
+  @keyframes gradShift {
+    0%   { background-position: 100% 0; filter: brightness(0.7); }
+    80%  { background-position: 40% 0;  filter: brightness(0.9); }
+    100% { background-position: 0% 0;   filter: brightness(1.3); }
+  }
+
+  .loader-bar-wrap {
+    width: min(320px, 70vw);
+    height: 6px;
+    background: rgba(255,255,255,0.08);
+    border-radius: 99px;
+    overflow: hidden;
+  }
+  body.light .loader-bar-wrap { background: rgba(0,0,0,0.08); }
+
+  .loader-bar-fill {
+    height: 100%;
+    border-radius: 99px;
+    width: 0%;
+    background: linear-gradient(90deg, #3d1f00, #7b3f00, #c87941, #f5c542, #ffe066);
+    transition: width 0.05s linear;
+    box-shadow: 0 0 10px rgba(245,197,66,0.5);
+  }
+
+  .loader-label {
+    font-family: 'DM Sans', sans-serif;
+    font-size: 0.72rem;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    color: var(--muted);
+    margin-top: 1rem;
+    font-weight: 600;
+  }
+
+  /* Page fade in top to bottom */
+  .page-reveal {
+    opacity: 0;
+    animation: revealPage 0.8s ease forwards;
+  }
+  @keyframes revealPage {
+    0%   { opacity: 0; transform: translateY(-18px); }
+    100% { opacity: 1; transform: translateY(0); }
+  }
 </style>
 </head>
-<body class="light">
-<div class="page">
+<body>
+<div id="loader">
+  <div id="loader-pct">0%</div>
+  <div class="loader-bar-wrap">
+    <div class="loader-bar-fill" id="loader-bar"></div>
+  </div>
+  <div class="loader-label">Loading Leaderboard</div>
+</div>
+<div class="page" id="main-page" style="opacity:0">
 
   <div class="header">
     <div>
@@ -588,16 +668,16 @@ function toggleTheme() {
     localStorage.setItem('theme', 'light');
   }
 }
-// Remember preference — default is light
+// Default is dark — only switch to light if user explicitly chose it
 const savedTheme = localStorage.getItem('theme');
-if (savedTheme === 'dark') {
-  document.body.classList.remove('light');
-  document.getElementById('toggleLabel').textContent = '🌙 Dark';
-  document.getElementById('toggleThumb').textContent = '🌙';
-} else {
+if (savedTheme === 'light') {
   document.body.classList.add('light');
   document.getElementById('toggleLabel').textContent = '☀️ Light';
   document.getElementById('toggleThumb').textContent = '☀️';
+} else {
+  document.body.classList.remove('light');
+  document.getElementById('toggleLabel').textContent = '🌙 Dark';
+  document.getElementById('toggleThumb').textContent = '🌙';
 }
 
 // Century Club — show closers with 100k+ written
@@ -615,6 +695,55 @@ if (centuryMembers.length > 0) {
     membersEl.appendChild(pill);
   });
 }
+
+// ── Loader animation ──
+(function() {
+  let pct = 0;
+  const pctEl = document.getElementById('loader-pct');
+  const barEl = document.getElementById('loader-bar');
+  const loaderEl = document.getElementById('loader');
+  const pageEl = document.getElementById('main-page');
+
+  // Ease out curve - fast start, slow finish
+  function easeOut(t) { return 1 - Math.pow(1 - t, 2); }
+
+  const duration = 4000; // ms
+  const start = performance.now();
+
+  function tick(now) {
+    const elapsed = now - start;
+    const t = Math.min(elapsed / duration, 1);
+    const easedT = easeOut(t);
+    pct = Math.round(easedT * 100);
+
+    pctEl.textContent = pct + '%';
+    barEl.style.width = pct + '%';
+    // Interpolate from deep brown to rich warm gold (color at 89% held to 100%)
+    const colorT = Math.min(pct / 89, 1);
+    const r = Math.round(61  + (210 - 61)  * colorT);
+    const g = Math.round(31  + (151 - 31)  * colorT);
+    const b = Math.round(0   + (10  - 0)   * colorT);
+    pctEl.style.webkitTextFillColor = `rgb(${r},${g},${b})`;
+    pctEl.style.backgroundImage = 'none';
+    pctEl.style.filter = pct >= 100
+      ? 'drop-shadow(0 0 12px rgba(194,138,9,0.7)) drop-shadow(0 0 4px rgba(194,138,9,0.5))'
+      : 'none';
+
+    if (t < 1) {
+      requestAnimationFrame(tick);
+    } else {
+      // Hold at 100% briefly then fade out loader, reveal page
+      setTimeout(() => {
+        loaderEl.style.opacity = '0';
+        loaderEl.style.pointerEvents = 'none';
+        pageEl.style.opacity = '1';
+        pageEl.classList.add('page-reveal');
+        setTimeout(() => loaderEl.remove(), 700);
+      }, 300);
+    }
+  }
+  requestAnimationFrame(tick);
+})();
 </script>
 </body>
 </html>
