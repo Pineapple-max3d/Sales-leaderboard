@@ -94,8 +94,7 @@
   }
 
   body.light { --bg: #f4f4f6; --surface: #ffffff; --surface2: #ebebf0; --border: rgba(0,0,0,0.08); --text: #111114; --muted: #888896; --gold: #c9900a; --gold-bg: rgba(201,144,10,0.08); --gold-border: rgba(201,144,10,0.25); --silver: #6b7a90; --silver-bg: rgba(107,122,144,0.08); --silver-border: rgba(107,122,144,0.22); --bronze: #a85e25; --bronze-bg: rgba(168,94,37,0.08); --bronze-border: rgba(168,94,37,0.22); --accent: #5b42d6; --green: #16a06a; --red: #dc3545; }
-  body.light .period { color: var(--muted); }
-  body.light thead th { color: #111114; } body.light .table-title { color: #111114; }
+  body.light .period { color: var(--muted); } body.light thead th { color: #111114; } body.light .table-title { color: #111114; }
   body.light .installed-val { color: #111114; } body.light .written-val { color: #333340; }
   body.light .pinst-lbl { color: #333340; } body.light .pwlbl { color: #333340; } body.light .pwval { color: #333340; }
   body.light .rep-name { color: #111114; } body.light .score-pct { color: #111114; }
@@ -165,8 +164,8 @@
 </div>
 <div class="page" id="main-page" style="opacity:0">
   <div class="header">
-    <div><h1>Closers Leaderboard</h1><p>June 1 – June 30, 2026</p></div>
-    <div class="header-right"><div class="period">Jun 2026</div><button class="theme-toggle" onclick="toggleTheme()" id="themeBtn"><span class="toggle-label" id="toggleLabel">🌙 Dark</span><div class="toggle-track"><div class="toggle-thumb" id="toggleThumb">🌙</div></div></button></div>
+    <div><h1>Closers Leaderboard</h1><p>July 1 – July 31, 2026</p></div>
+    <div class="header-right"><div class="period">Jul 2026</div><button class="theme-toggle" onclick="toggleTheme()" id="themeBtn"><span class="toggle-label" id="toggleLabel">🌙 Dark</span><div class="toggle-track"><div class="toggle-thumb" id="toggleThumb">🌙</div></div></button></div>
   </div>
   <div class="podium" id="podium"></div>
   <div class="century-section" id="century-section" style="display:none">
@@ -195,19 +194,19 @@
       </table>
     </div>
   </div>
-  <div class="footer">Sales Leaderboard · Data for June 2026</div>
+  <div class="footer">Sales Leaderboard · Data for July 2026</div>
 </div>
 <script>
 const reps = [
-  { name:"Adeel",  installed:91831, written:109006 },
-  { name:"Waqas",  installed:43260, written:93460  },
-  { name:"Amber",  installed:65647, written:131447 },
-  { name:"Sandy",  installed:12475, written:55600  },
-  { name:"Wasil",  installed:0,     written:0      },
-  { name:"Ahmed",  installed:16800, written:59800  },
-  { name:"Nitesh", installed:23987, written:23987  },
-  { name:"Nihar",  installed:0,     written:3503   },
-  { name:"Vish",   installed:0,     written:0      },
+  { name:"Adeel",  installed:0, written:0    },
+  { name:"Waqas",  installed:0, written:0    },
+  { name:"Amber",  installed:0, written:0    },
+  { name:"Sandy",  installed:0, written:6000 },
+  { name:"Wasil",  installed:0, written:0    },
+  { name:"Ahmed",  installed:0, written:0    },
+  { name:"Nitesh", installed:0, written:0    },
+  { name:"Nihar",  installed:0, written:0    },
+  { name:"Vish",   installed:0, written:0    },
 ];
 
 reps.sort((a,b) => b.installed - a.installed || b.written - a.written);
