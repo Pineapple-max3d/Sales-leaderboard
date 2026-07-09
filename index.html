@@ -198,13 +198,13 @@
 </div>
 <script>
 const reps = [
-  { name:"Adeel",  installed:0, written:0    },
-  { name:"Waqas",  installed:0, written:0    },
-  { name:"Amber",  installed:0, written:0    },
-  { name:"Sandy",  installed:0, written:6000 },
-  { name:"Wasil",  installed:0, written:0    },
-  { name:"Nitesh", installed:0, written:0    },
-  { name:"Vish",   installed:0, written:0    },
+  { name:"Adeel",  installed:0, written:0     },
+  { name:"Waqas",  installed:0, written:0     },
+  { name:"Amber",  installed:0, written:0     },
+  { name:"Sandy",  installed:0, written:45200 },
+  { name:"Wasil",  installed:0, written:0     },
+  { name:"Nitesh", installed:0, written:0     },
+  { name:"Vish",   installed:0, written:0     },
 ];
 
 reps.sort((a,b) => b.installed - a.installed || b.written - a.written);
@@ -254,7 +254,7 @@ if (savedTheme === 'light') { document.body.classList.add('light'); document.get
 else { document.body.classList.remove('light'); document.getElementById('toggleLabel').textContent = '🌙 Dark'; document.getElementById('toggleThumb').textContent = '🌙'; }
 
 const centuryMembers = reps.filter(r => r.written >= 100000);
-const avColors = ['av0','av1','av2','av3','av4','av5','av6','av7','av8'];
+const avColors = ['av0','av1','av2','av3','av4','av5','av6'];
 if (centuryMembers.length > 0) {
   document.getElementById('century-section').style.display = 'block';
   document.getElementById('century-count').textContent = centuryMembers.length;
@@ -263,7 +263,7 @@ if (centuryMembers.length > 0) {
     const originalIndex = reps.indexOf(r);
     const pill = document.createElement('div');
     pill.className = 'century-member';
-    pill.innerHTML = `<div class="cm-av ${avColors[originalIndex % 9]}">${ini(r.name)}</div><span class="cm-name">${r.name}</span><span class="cm-val">${fmt(r.written)} <span style="font-size:0.82rem;font-weight:600;opacity:0.85;">Deals Written</span></span>`;
+    pill.innerHTML = `<div class="cm-av ${avColors[originalIndex % 7]}">${ini(r.name)}</div><span class="cm-name">${r.name}</span><span class="cm-val">${fmt(r.written)} <span style="font-size:0.82rem;font-weight:600;opacity:0.85;">Deals Written</span></span>`;
     membersEl.appendChild(pill);
   });
 }
