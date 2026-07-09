@@ -7,7 +7,6 @@
 <link href="https://fonts.googleapis.com/css2?family=DM+Sans:ital,wght@0,400;0,500;0,600;0,700;0,800;1,700;1,800&display=swap" rel="stylesheet">
 <style>
   *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
-
   :root {
     --bg: #0d0d0f; --surface: #17171a; --surface2: #1f1f24;
     --border: rgba(255,255,255,0.07); --text: #f0f0f0; --muted: #6b6b78;
@@ -16,24 +15,20 @@
     --bronze: #c87941; --bronze-bg: rgba(200,121,65,0.10); --bronze-border: rgba(200,121,65,0.28);
     --accent: #7b61ff; --green: #34d399; --red: #f87171;
   }
-
   body { font-family: 'DM Sans', sans-serif; background: var(--bg); color: var(--text); min-height: 100vh; padding: 2.5rem 1.2rem 3rem; }
   .page { max-width: 860px; margin: 0 auto; }
   .header { display: flex; align-items: flex-end; justify-content: space-between; margin-bottom: 2.2rem; gap: 1rem; flex-wrap: wrap; }
   .header h1 { font-size: clamp(1.7rem, 4vw, 2.5rem); font-weight: 800; letter-spacing: -0.04em; color: var(--text); line-height: 1; }
   .header p { font-size: 0.78rem; color: var(--muted); margin-top: 0.35rem; letter-spacing: 0.05em; text-transform: uppercase; }
   .period { background: var(--surface2); border: 1px solid var(--border); border-radius: 8px; padding: 0.45rem 0.9rem; font-size: 0.72rem; color: var(--muted); letter-spacing: 0.06em; text-transform: uppercase; align-self: center; white-space: nowrap; }
-
   .podium { display: grid; grid-template-columns: repeat(3,1fr); gap: 1rem; margin-bottom: 2rem; }
   .pc-wrap { position: relative; border-radius: 16px; padding: 2px; }
   .pc-wrap::before { content: ''; position: absolute; inset: -2px; border-radius: 18px; background: conic-gradient(from var(--angle, 0deg), rgba(0,0,0,0) 0%, rgba(0,0,0,0) 55%, var(--ring-color) 68%, var(--ring-color) 78%, rgba(0,0,0,0) 91%, rgba(0,0,0,0) 100%); animation: spin 3s linear infinite; }
   .pc-wrap::after { content: ''; position: absolute; inset: -2px; border-radius: 18px; background: transparent; box-shadow: 0 0 16px 4px var(--ring-color), inset 0 0 8px 1px var(--ring-color); animation: pulse 2s ease-in-out infinite; opacity: 0.45; }
-  .pc-wrap.gold  { --ring-color: #f5c542; }
-  .pc-wrap.silver{ --ring-color: #b0b8c8; }
-  .pc-wrap.bronze{ --ring-color: #c87941; }
+  .pc-wrap.gold { --ring-color: #f5c542; } .pc-wrap.silver { --ring-color: #b0b8c8; } .pc-wrap.bronze { --ring-color: #c87941; }
   @property --angle { syntax: '<angle>'; initial-value: 0deg; inherits: false; }
-  @keyframes spin   { to { --angle: 360deg; } }
-  @keyframes pulse  { 0%,100%{ opacity: 0.3; } 50%{ opacity: 0.7; } }
+  @keyframes spin { to { --angle: 360deg; } }
+  @keyframes pulse { 0%,100%{ opacity: 0.3; } 50%{ opacity: 0.7; } }
   .pc { border-radius: 14px; padding: 1.2rem 1.1rem 1.1rem; border: 1px solid; position: relative; overflow: hidden; display: flex; flex-direction: column; gap: 0.22rem; z-index: 1; }
   .p1 { background: var(--surface); border-color: var(--gold-border); }
   .p2 { background: var(--surface); border-color: var(--silver-border); }
@@ -89,7 +84,7 @@
     .pwrow { margin-top: 0.2rem; padding-top: 0.2rem; }
     .score-cell, thead th.score-th { display: none; }
   }
-  body.light { --bg: #f4f4f6; --surface: #ffffff; --surface2: #ebebf0; --border: rgba(0,0,0,0.08); --text: #111114; --muted: #888896; --gold: #c9900a; --gold-bg: rgba(201,144,10,0.08); --gold-border: rgba(201,144,10,0.25); --silver: #6b7a90; --silver-bg: rgba(107,122,144,0.08); --silver-border: rgba(107,122,144,0.22); --bronze: #a85e25; --bronze-bg: rgba(168,94,37,0.08); --bronze-border: rgba(168,94,37,0.22); --accent: #5b42d6; --green: #16a06a; --red: #dc3545; }
+  body.light { --bg: #f4f4f6; --surface: #ffffff; --surface2: #ebebf0; --border: rgba(0,0,0,0.08); --text: #111114; --muted: #888896; --gold: #c9900a; --gold-border: rgba(201,144,10,0.25); --silver: #6b7a90; --silver-border: rgba(107,122,144,0.22); --bronze: #a85e25; --bronze-border: rgba(168,94,37,0.22); --accent: #5b42d6; --green: #16a06a; --red: #dc3545; }
   body.light .period { color: var(--muted); } body.light thead th { color: #111114; } body.light .table-title { color: #111114; }
   body.light .installed-val { color: #111114; } body.light .written-val { color: #333340; }
   body.light .pinst-lbl { color: #333340; } body.light .pwlbl { color: #333340; } body.light .pwval { color: #333340; }
@@ -194,8 +189,8 @@ const reps = [
   { name:"Adeel",  installed:0,     written:0     },
   { name:"Waqas",  installed:0,     written:0     },
   { name:"Amber",  installed:0,     written:0     },
-  { name:"Sandy",  installed:24100, written:45200 },
-  { name:"Wasil",  installed:0,     written:0     },
+  { name:"Sandy",  installed:24100, written:55300 },
+  { name:"Wasil",  installed:0,     written:8500  },
   { name:"Nitesh", installed:0,     written:0     },
   { name:"Vish",   installed:0,     written:0     },
 ];
